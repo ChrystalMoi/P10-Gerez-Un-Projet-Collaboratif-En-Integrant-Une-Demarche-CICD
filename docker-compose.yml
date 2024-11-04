@@ -1,0 +1,9 @@
+services:
+  front:
+    image: "bobapp-front"
+    ports:
+      -"80:80"
+  back:
+    image: "bobapp-back"
+    ports:
+      -"8080:8080"
