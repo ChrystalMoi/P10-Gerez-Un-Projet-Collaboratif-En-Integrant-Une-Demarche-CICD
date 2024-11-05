@@ -1,9 +1,27 @@
 services:
-  front:
-    image: "bobapp-front"
+  backend:
+    build:
+      context: ./back  # Path to the backend directory
+      dockerfile: Dockerfile  # Name of the Dockerfile in /back
+    image: chrystalb/gerez-un-projet-collaboratif-en-integrant-une-demarche-ci-cd:bobapp-back
+    container_name: bobapp-back
     ports:
-      -"80:80"
-  back:
-    image: "bobapp-back"
+      - "8080:8080"  # Expose backend port
+    networks:
+      - bobapp-reseau
+
+  frontend:
+    build:
+      context: ./front  # Path to the frontend directory
+      dockerfile: Dockerfile  # Name of the Dockerfile in /front
+    image: chrystalb/gerez-un-projet-collaboratif-en-integrant-une-demarche-ci-cd:bobapp-front
+    container_name: bobapp-front
     ports:
-      -"8080:8080"
+      - "80:80"  # Expose frontend port
+    networks:
+      - bobapp-reseau
+
+# Réseau partagé par les conteneurs
+networks:
+  bobapp-reseau:
+    driver: bridge
