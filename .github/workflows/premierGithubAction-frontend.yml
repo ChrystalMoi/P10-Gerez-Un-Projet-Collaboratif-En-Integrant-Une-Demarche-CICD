@@ -44,7 +44,7 @@ jobs:
 
       - name: Lancement des tests
         working-directory: front
-        run: npm run test:prod -- --watch --browsers=ChromeHeadless
+        run: npm run test:prod -- --browsers=ChromeHeadless
 
       - name: Afficher le contenu de coverage
         run: ls -la coverage
@@ -54,4 +54,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-test-results
-          path: coverage/bobapp
+          path: front/coverage/bobapp
