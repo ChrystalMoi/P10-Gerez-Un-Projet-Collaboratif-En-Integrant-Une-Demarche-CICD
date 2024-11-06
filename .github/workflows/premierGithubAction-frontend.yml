@@ -34,10 +34,10 @@ jobs:
         working-directory: front
         run: npm ci
 
-      - name: Installation Xvfb
+      - name: Installation de Xvfb
         run: sudo apt-get install -y xvfb
 
-      - name: Démarrage Xvfb
+      - name: Démarrage de Xvfb
         run: |
           Xvfb :99 &
           export DISPLAY=:99 
