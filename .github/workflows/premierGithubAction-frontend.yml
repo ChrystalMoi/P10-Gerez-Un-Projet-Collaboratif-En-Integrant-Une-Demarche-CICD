@@ -44,7 +44,7 @@ jobs:
 
       - name: Lancement des tests
         working-directory: front
-        run: npm run test:prod
+        run: npm run test:prod -- --watch --browsers=ChromeHeadless
 
       - name: Afficher le contenu de coverage
         run: ls -la coverage
