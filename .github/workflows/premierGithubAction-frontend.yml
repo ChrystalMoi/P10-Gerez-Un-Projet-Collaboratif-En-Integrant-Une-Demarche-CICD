@@ -51,4 +51,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-test-results
-          path: front/coverage/bobapp
+          path: coverage/bobapp
