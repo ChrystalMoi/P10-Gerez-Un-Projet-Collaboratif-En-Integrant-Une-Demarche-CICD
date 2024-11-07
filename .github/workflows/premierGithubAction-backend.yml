@@ -2,13 +2,13 @@ name: Premier GitHub Action - Backend Tests
 
 on:
   push:
-    paths:
-      - 'back/**'
+    #paths:
+     # - 'back/**'
     branches:
       - main
   pull_request:
-    paths:
-      - 'back/**'
+    #paths:
+     # - 'back/**'
     branches:
       - main
 

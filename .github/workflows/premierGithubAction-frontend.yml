@@ -2,13 +2,13 @@ name: Premier GitHub Action - Frontend Tests
 
 on:
   push:
-    paths:
-      - 'front/**'
+    #paths:
+     # - 'front/**'
     branches:
       - main
   pull_request:
-    paths:
-      - 'front/**'
+    #paths:
+     # - 'front/**'
     branches:
       - main
 
