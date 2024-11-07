@@ -48,9 +48,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
         run: |
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar 
-          -Dsonar.projectKey=Backend-P10-Gerez-Un-Projet-Collaboratif
-          -Dsonar.projectName=Backend-P10
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectKey=Backend-P10-Gerez-Un-Projet-Collaboratif \
+          -Dsonar.projectName=Backend-P10 \
+          -Dsonar.organization=chrystalmoi
 
       # Étape 6 : Upload du rapport JaCoCo
       - name: Upload du rapport JaCoCo
