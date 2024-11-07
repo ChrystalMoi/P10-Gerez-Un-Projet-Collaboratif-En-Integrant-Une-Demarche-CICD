@@ -28,19 +28,17 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar-${{ hashFiles('**/sonar-project.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-sonar-
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       
 
       # Étape 4 : Cache des packages Maven
       - name: Mettre en cache les packages Maven
         uses: actions/cache@v4
         with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
             
 
       # Étape 5 : Build et analyse avec SonarCloud
@@ -48,13 +46,11 @@ jobs:
         working-directory: back
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
         run: |
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-          -Dsonar.projectKey=ChrystalMoi_P10-Gerez-Un-Projet-Collaboratif-En-Integrant-Une-Demarche-CICD \
-          -Dsonar.projectName=P10-Gerez-Un-Projet-Collaboratif-En-Integrant-Une-Demarche-CICD \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar 
+          -Dsonar.projectKey=Backend-P10-Gerez-Un-Projet-Collaboratif
+          -Dsonar.projectName=Backend-P10
 
       # Étape 6 : Upload du rapport JaCoCo
       - name: Upload du rapport JaCoCo
