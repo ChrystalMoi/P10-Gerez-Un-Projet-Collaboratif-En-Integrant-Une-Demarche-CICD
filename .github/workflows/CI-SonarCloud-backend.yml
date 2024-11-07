@@ -1,0 +1,65 @@
+name: CI Workflow Backend
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  ci-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Checkout du code source
+      - name: Vérifier le code
+        uses: actions/checkout@v4
+
+      # Étape 2 : Configuration de JDK 17
+      - name: Configurer JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      # Étape 3 : Cache des packages SonarCloud
+      - name: Mettre en cache les packages SonarCloud
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar-${{ hashFiles('**/sonar-project.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-sonar-
+      
+
+      # Étape 4 : Cache des packages Maven
+      - name: Mettre en cache les packages Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+            
+
+      # Étape 5 : Build et analyse avec SonarCloud
+      - name: Build et analyse avec SonarCloud
+        working-directory: back
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectKey=ChrystalMoi_P10-Gerez-Un-Projet-Collaboratif-En-Integrant-Une-Demarche-CICD \
+          -Dsonar.projectName=P10-Gerez-Un-Projet-Collaboratif-En-Integrant-Une-Demarche-CICD \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+      # Étape 6 : Upload du rapport JaCoCo
+      - name: Upload du rapport JaCoCo
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: back/target/site/jacoco/
