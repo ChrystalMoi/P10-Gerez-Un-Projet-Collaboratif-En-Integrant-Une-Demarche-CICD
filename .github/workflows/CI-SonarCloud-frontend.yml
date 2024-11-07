@@ -77,7 +77,7 @@ jobs:
       # Étape 10 : Lister les fichiers de couverture
       - name: Liste des fichier de coverage
         working-directory: front
-        run: ls -l front/coverage/bobapp
+        run: ls -l coverage/bobapp
 
       # Étape 11 : Upload des résultats de test frontend
       - name: Upload des résultats de tests frontend
