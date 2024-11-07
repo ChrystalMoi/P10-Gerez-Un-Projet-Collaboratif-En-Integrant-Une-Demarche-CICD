@@ -56,6 +56,15 @@ jobs:
           name: frontend-test-results
           path: front/coverage/bobapp
 
+      - name: Installer Java 17
+        run: |
+          sudo apt-get update
+          sudo apt-get install openjdk-17-jdk
+
+      - name: Installer SonarQube Scanner
+        run: |
+          npm install -g sonar-scanner
+
       - name: Upload des données de couverture pour SonarQube
         if: success()
         run: |
