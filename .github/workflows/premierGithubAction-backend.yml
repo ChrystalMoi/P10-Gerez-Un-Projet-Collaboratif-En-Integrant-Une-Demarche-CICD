@@ -2,9 +2,13 @@ name: Premier GitHub Action - Backend Tests
 
 on:
   push:
+    paths:
+      - 'back/**'
     branches:
       - main
   pull_request:
+    paths:
+      - 'back/**'
     branches:
       - main
 
@@ -40,3 +44,24 @@ jobs:
         with:
           name: jacoco-report
           path: back/target/site/jacoco
+
+      - name: Installer SonarQube Scanner
+        run: |
+          curl -sS https://downloads.sonarsource.com/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip -o sonar-scanner.zip
+          unzip sonar-scanner.zip
+          sudo mv sonar-scanner-4.7.0.2747-linux /opt/sonar-scanner
+          sudo ln -s /opt/sonar-scanner/bin/sonar-scanner /usr/local/bin/sonar-scanner
+
+      - name: Exécuter l'analyse SonarQube
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=ChrystalMoi_P10-Gerez-Un-Projet-Collaboratif-En-Integrant-Une-Demarche-CICD \
+            -Dsonar.organization=chrystalmoi \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.sources=back/src \
+            -Dsonar.tests=back/src/test \
+            -Dsonar.java.binaries=back/target/classes \
+            -Dsonar.jacoco.reportPaths=back/target/site/jacoco/jacoco.xml \
+            -Dsonar.login=$SONAR_TOKEN
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
