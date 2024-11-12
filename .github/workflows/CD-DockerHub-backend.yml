@@ -39,7 +39,7 @@ jobs:
         run: |
           echo "Docker Username: ${{ secrets.DOCKER_USERNAME }}"
 
-      # Étape 5.2 : Construction et push de l'image Docker - ${{ secrets.DOCKER_USERNAME }}
+      # Étape 5.2 : Construction et push de l'image Docker
       - name: Construction et push de l'image Docker
         uses: docker/build-push-action@v4
         with:
