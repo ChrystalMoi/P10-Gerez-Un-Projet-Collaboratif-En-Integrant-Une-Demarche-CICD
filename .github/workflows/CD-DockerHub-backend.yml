@@ -35,7 +35,7 @@ jobs:
 
       # Étape 5 : Construction et push de l'image Docker
       - name: Construction et push de l'image Docker
-        uses: docker/build-push-action@v6.9.0
+        uses: docker/build-push-action@v4.2.0
         with:
           context: back
           file: back/Dockerfile
