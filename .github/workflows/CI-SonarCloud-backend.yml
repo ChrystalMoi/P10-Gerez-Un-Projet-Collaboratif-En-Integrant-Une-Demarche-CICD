@@ -39,7 +39,6 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-            
 
       # Étape 5 : Build et analyse avec SonarCloud
       - name: Build et analyse avec SonarCloud

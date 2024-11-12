@@ -5,7 +5,7 @@ COPY ./ /usr/local/app/
 
 RUN yarn
 RUN npm run build
- 
+
 FROM nginx:latest as production
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
