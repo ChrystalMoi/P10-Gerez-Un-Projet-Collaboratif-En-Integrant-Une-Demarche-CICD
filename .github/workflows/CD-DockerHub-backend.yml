@@ -46,7 +46,7 @@ jobs:
           context: back
           file: back/Dockerfile
           push: true
-          tags: chrystalb/backend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/backend:latest
 
       # Étape 6 : Vérification des images Docker
       - name: List les images Docker
