@@ -41,12 +41,12 @@ jobs:
 
       # Étape 5.2 : Construction et push de l'image Docker - ${{ secrets.DOCKER_USERNAME }}
       - name: Construction et push de l'image Docker
-        uses: docker/build-push-action@v6.9.0
+        uses: docker/build-push-action@v4
         with:
           context: back
           file: back/Dockerfile
           push: true
-          tags: "${{ secrets.DOCKER_USERNAME }}/backend:latest"
+          tags: ${{ secrets.DOCKER_USERNAME }}/backend:latest
 
       # Étape 6 : Vérification des images Docker
       - name: List les images Docker
