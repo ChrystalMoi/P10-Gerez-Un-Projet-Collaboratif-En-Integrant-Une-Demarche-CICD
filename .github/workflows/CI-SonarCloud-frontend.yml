@@ -72,7 +72,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.organization=chrystalmoi \
           -Dsonar.token=${{ secrets.SONAR_TOKEN_FRONTEND }} \
-          -Dsonar.javascript.lcov.reportPaths=front/coverage/bobapp/lcov.info
+          -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info
 
       # Étape 10 : Lister les fichiers de couverture
       - name: Liste des fichier de coverage
