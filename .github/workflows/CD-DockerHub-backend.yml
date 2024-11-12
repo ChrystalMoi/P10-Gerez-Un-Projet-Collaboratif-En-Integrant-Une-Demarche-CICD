@@ -1,9 +1,10 @@
 name: CD Workflow Backend
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["CI Workflow Backend"]
+    types:
+      - completed
 
 jobs:
   cd-backend:
@@ -33,14 +34,19 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Étape 5 : Construction et push de l'image Docker
+      # Étape 5.1 : Vérifier le nom d'utilisateur Docker
+      - name: Vérifier le nom d'utilisateur Docker
+        run: |
+          echo "Docker Username: ${{ secrets.DOCKER_USERNAME }}"
+
+      # Étape 5.2 : Construction et push de l'image Docker - ${{ secrets.DOCKER_USERNAME }}
       - name: Construction et push de l'image Docker
-        uses: docker/build-push-action@v4.2.0
+        uses: docker/build-push-action@v6.9.0
         with:
           context: back
           file: back/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/backend:latest
+          tags: chrystalb/backend:latest
 
       # Étape 6 : Vérification des images Docker
       - name: List les images Docker
